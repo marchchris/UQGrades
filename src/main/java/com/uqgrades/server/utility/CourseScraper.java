@@ -19,21 +19,43 @@ public class CourseScraper {
   private static Course getOffering(String URL, String name, Integer year,
                                     Integer semester) {
     try {
-      Document courseProfileDoc = Jsoup.connect(URL).get();
-
-      // select all rows from assessment summary table
-      Element assessmentSummaryTable =
-          courseProfileDoc.selectFirst("div.assessment-summary-table");
-      Element tableBody = assessmentSummaryTable.selectFirst("tbody");
-      Elements tableRows = tableBody.select("tr");
-
       Map<String, String> assessments = new HashMap<>();
 
-      // add each assessment and its weight as mapping
-      for (Element row : tableRows) {
-        Elements tds = row.select("td");
-        Element a = tds.get(1).selectFirst("a");
-        assessments.put(a.text(), tds.get(2).text());
+      // new layout
+      if (year >= 2024) {
+        Document courseProfileDoc = Jsoup.connect(URL).get();
+        // select all rows from assessment summary table
+        Element assessmentSummaryTable =
+            courseProfileDoc.selectFirst("div.assessment-summary-table");
+        Element tableBody = assessmentSummaryTable.selectFirst("tbody");
+        Elements tableRows = tableBody.select("tr");
+
+        // add each assessment and its weight as mapping
+        for (Element row : tableRows) {
+          Elements tds = row.select("td");
+          Element a = tds.get(1).selectFirst("a");
+          assessments.put(a.text(), tds.get(2).text());
+        }
+      } else { // old layout
+        URL = URL.substring(0, 73) + "5" +
+              URL.substring(73 + 1); // open section 5
+        Document courseProfileDoc = Jsoup.connect(URL).get();
+
+        Element assessmentSummaryTable = courseProfileDoc.selectFirst("tbody");
+        Elements tableRows = assessmentSummaryTable.select("tr");
+
+        // add each assessment and its weight as mapping
+        for (Element row : tableRows) {
+          Elements tds = row.select("td");
+          Element task = tds.get(0);
+          Element weighting = tds.get(2);
+
+          // remove <em> from task
+          Element em = task.selectFirst("em");
+          em.remove();
+
+          assessments.put(task.text(), weighting.text());
+        }
       }
 
       // convert map to json
