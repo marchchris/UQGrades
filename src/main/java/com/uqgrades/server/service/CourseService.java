@@ -2,6 +2,7 @@ package com.uqgrades.server.service;
 
 import com.uqgrades.server.model.Course;
 import com.uqgrades.server.repository.CourseRepository;
+import com.uqgrades.server.utility.CourseScraper;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class CourseService {
 
     // course not stored in database
     if (course == null) {
+      Course scrapedCourse = CourseScraper.scrapeCourse(name, year, semester);
+
+      if (scrapedCourse == null) {
+        return null; // course offering does not exist
+      }
+
+      return courseRepo.save(scrapedCourse);
     }
 
     return course;

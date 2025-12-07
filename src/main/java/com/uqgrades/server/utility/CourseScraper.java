@@ -53,6 +53,7 @@ public class CourseScraper {
    */
   public static Course scrapeCourse(String name, Integer year,
                                     Integer semester) {
+
     // create URL for course page
     String URL =
         "https://programs-courses.uq.edu.au/course.html?course_code=" + name;

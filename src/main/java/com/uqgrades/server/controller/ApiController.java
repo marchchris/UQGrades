@@ -20,7 +20,7 @@ public class ApiController {
     this.courseService = courseService;
   }
 
-  @GetMapping("/getCourse/{name}/{year}/{semester}")
+  @GetMapping("/{name}/{year}/{semester}")
   public ResponseEntity<?> getCourse(@PathVariable String name,
                                      @PathVariable Integer year,
                                      @PathVariable Integer semester) {
