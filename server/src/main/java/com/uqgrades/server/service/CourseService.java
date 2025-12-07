@@ -16,5 +16,15 @@ public class CourseService {
     this.courseRepo = courseRepo;
   }
 
-  public List<Course> getAllCourses() { return courseRepo.findAll(); }
+  // return course matching name, year and semester
+  public Course getCourse(String name, Integer year, Integer semester) {
+    Course course =
+        courseRepo.findByNameAndYearAndSemester(name, year, semester);
+
+    // course not stored in database
+    if (course == null) {
+    }
+
+    return course;
+  }
 }

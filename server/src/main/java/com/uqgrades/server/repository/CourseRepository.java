@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {}
+public interface CourseRepository extends JpaRepository<Course, Long> {
+
+  Course findByNameAndYearAndSemester(String name, Integer year,
+                                      Integer semester);
+}
