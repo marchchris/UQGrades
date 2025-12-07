@@ -21,11 +21,17 @@ public class TestController {
     this.courseService = courseService;
   }
 
-  @GetMapping("/")
-  public ResponseEntity<?> test() {
+  @GetMapping("/{name}/{year}/{semester}")
+  public ResponseEntity<?> test(@PathVariable String name,
+                                @PathVariable Integer year,
+                                @PathVariable Integer semester) {
 
-    Course course = CourseScraper.scrapeCourse("MATH1051", 2025, 1);
+    Course course = CourseScraper.scrapeCourse(name, year, semester);
 
-    return new ResponseEntity<>(course, HttpStatus.OK);
+    if (course != null) {
+      return new ResponseEntity<>(course, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("Returned null", HttpStatus.OK);
+    }
   }
 }

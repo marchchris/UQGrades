@@ -21,6 +21,7 @@ public class CourseScraper {
     try {
       Document courseProfileDoc = Jsoup.connect(URL).get();
 
+      // select all rows from assessment summary table
       Element assessmentSummaryTable =
           courseProfileDoc.selectFirst("div.assessment-summary-table");
       Element tableBody = assessmentSummaryTable.selectFirst("tbody");
@@ -28,14 +29,17 @@ public class CourseScraper {
 
       Map<String, String> assessments = new HashMap<>();
 
+      // add each assessment and its weight as mapping
       for (Element row : tableRows) {
         Elements tds = row.select("td");
         Element a = tds.get(1).selectFirst("a");
         assessments.put(a.text(), tds.get(2).text());
       }
 
+      // convert map to json
       Gson gson = new Gson();
       String jsonData = gson.toJson(assessments);
+
       return new Course(name, year, semester, jsonData);
     } catch (IOException e) {
       System.err.println(e);
@@ -64,7 +68,8 @@ public class CourseScraper {
       List<Element> tables = List.of(currTable, archTable);
 
       for (Element table : tables) {
-        Elements rows = table.select("tr:gt(0)");
+        Element tableBody = table.selectFirst("tbody");
+        Elements rows = tableBody.select("tr");
 
         for (Element row : rows) {
           Element link =
