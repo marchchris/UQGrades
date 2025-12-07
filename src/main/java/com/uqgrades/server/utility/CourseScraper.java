@@ -22,7 +22,7 @@ public class CourseScraper {
       Map<String, String> assessments = new HashMap<>();
 
       // new layout
-      if (year >= 2024) {
+      if (year >= 2024 && semester >= 2) {
         Document courseProfileDoc = Jsoup.connect(URL).get();
         // select all rows from assessment summary table
         Element assessmentSummaryTable =
