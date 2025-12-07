@@ -34,7 +34,11 @@ public class CourseScraper {
         for (Element row : tableRows) {
           Elements tds = row.select("td");
           Element a = tds.get(1).selectFirst("a");
-          assessments.put(a.text(), tds.get(2).text());
+
+          String taskText = a.text();
+          String weightingText = tds.get(2).text().split(" ")[0];
+
+          assessments.put(taskText, weightingText);
         }
       } else { // old layout
         URL = URL.substring(0, 73) + "5" +
@@ -54,7 +58,10 @@ public class CourseScraper {
           Element em = task.selectFirst("em");
           em.remove();
 
-          assessments.put(task.text(), weighting.text());
+          String taskText = task.text().split(" ")[0];
+          String weightingText = weighting.text();
+
+          assessments.put(taskText, weightingText);
         }
       }
 
