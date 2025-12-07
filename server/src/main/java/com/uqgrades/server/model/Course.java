@@ -18,9 +18,14 @@ public class Course {
 
   @Column(name = "data") private String data;
 
-  protected Course() {}
+  public Course() {}
 
-  protected Course(String data) { this.data = data; }
+  public Course(String name, Integer year, Integer semester, String data) {
+    this.name = name;
+    this.year = year;
+    this.semester = semester;
+    this.data = data;
+  }
 
   public Long getId() { return id; }
 
