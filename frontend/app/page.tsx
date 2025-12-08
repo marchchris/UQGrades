@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { CodeCombobox } from "@/components/course-combobox";
@@ -20,17 +21,25 @@ import {
 } from "@/components/ui/select";
 
 export default function Home() {
+  const router = useRouter();
+
   // course codes combobox variables
   const [value, setValue] = useState("");
   const [codes, setCodes] = useState(null);
 
-  // semester selection variable
+  // form selection variables
   const [semester, setSemester] = useState<string>("1");
+  const [year, setYear] = useState<string>("");
+  const [canUseBtn, setCanUseBtn] = useState<boolean>(false);
+
+  const isValidYear =
+    year.length === 4 && !isNaN(year) && year >= 2000 && year <= 2100;
 
   // page state variables
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
+  // fetch course codes from backend api
   useEffect(() => {
     const fetchCodes = async () => {
       try {
@@ -51,6 +60,26 @@ export default function Home() {
     fetchCodes();
   }, []);
 
+  // ensure form is filled before pressing button
+  useEffect(() => {
+    if (value === "") {
+      setCanUseBtn(false);
+      return;
+    }
+
+    if (semester === "") {
+      setCanUseBtn(false);
+      return;
+    }
+
+    if (year === "" || !isValidYear) {
+      setCanUseBtn(false);
+      return;
+    }
+
+    setCanUseBtn(true);
+  }, [value, semester, year]);
+
   if (loading) {
     return <LoadingPage />;
   }
@@ -58,7 +87,7 @@ export default function Home() {
   return (
     <div className="flex h-screen items-center justify-center">
       <Card className="w-full max-w-sm">
-        <CardContent className="flex flex-col gap-8 items-center">
+        <CardContent className="flex flex-col gap-6 items-center">
           <div className="text-center">
             <h1 className="text-lg font-bold">UQ Grades</h1>
             <p className="text-sm text-neutral-400">
@@ -104,12 +133,28 @@ export default function Home() {
                 type="number"
                 min="1"
                 max="9999"
-                placeholder="Select year..."
+                maxLength="4"
+                placeholder="Select year... (e.g 2025)"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
               />
+              <div className="flex flex-col items-center">
+                {year && !isValidYear && (
+                  <span className="text-red-400 text-sm">
+                    Enter a valid year
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           <div className="flex flex-col items-center w-full">
-            <Button>Find Course</Button>
+            <Button
+              className="w-1/2"
+              disabled={!canUseBtn}
+              onClick={() => router.push(`/${value}/${year}/${semester}`)}
+            >
+              Find Course
+            </Button>
           </div>
         </CardContent>
       </Card>
