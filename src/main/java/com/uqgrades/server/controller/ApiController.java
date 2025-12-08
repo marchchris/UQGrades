@@ -1,6 +1,7 @@
 package com.uqgrades.server.controller;
 
 import com.uqgrades.server.model.Course;
+import com.uqgrades.server.service.CodeService;
 import com.uqgrades.server.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ApiController {
   CourseService courseService;
+  CodeService codeService;
 
   @Autowired
-  public ApiController(CourseService courseService) {
+  public ApiController(CourseService courseService, CodeService codeService) {
     this.courseService = courseService;
+    this.codeService = codeService;
   }
 
+  // return all course codes at UQ
+  @GetMapping("/codes")
+  public ResponseEntity<?> getCodes() {
+    return new ResponseEntity<>(this.codeService.getAllCodes(), HttpStatus.OK);
+  }
+
+  // return course offering
   @GetMapping("/{name}/{year}/{semester}")
   public ResponseEntity<?> getCourse(@PathVariable String name,
                                      @PathVariable Integer year,
