@@ -14,6 +14,7 @@ public class CodeScraper {
     String URL = "https://programs-courses.uq.edu.au/"
                  + "search.html?keywords=&searchType=coursecode&archived=true&"
                  + "CourseParameters%5Bsemester%5D=";
+
     List<Code> codes = new ArrayList<>();
 
     try {
@@ -22,7 +23,7 @@ public class CodeScraper {
       Element coursesContainer = doc.getElementById("courses-container");
       Element ul = coursesContainer.selectFirst("ul.listing");
 
-      Elements rows = ul.select("li");
+      Elements rows = ul.select("h2.trigger");
 
       // extract code, description from listing and add to list
       for (Element li : rows) {
@@ -31,7 +32,6 @@ public class CodeScraper {
 
         codes.add(new Code(code, description));
       }
-
     } catch (IOException e) {
       System.err.println(e);
     }

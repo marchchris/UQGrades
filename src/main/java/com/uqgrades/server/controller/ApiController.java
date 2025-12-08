@@ -3,6 +3,7 @@ package com.uqgrades.server.controller;
 import com.uqgrades.server.model.Course;
 import com.uqgrades.server.service.CodeService;
 import com.uqgrades.server.service.CourseService;
+import com.uqgrades.server.utility.CodeScraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class ApiController {
   public ApiController(CourseService courseService, CodeService codeService) {
     this.courseService = courseService;
     this.codeService = codeService;
+  }
+
+  @GetMapping("/test")
+  public void test() {
+    CodeScraper.scrapeCodes();
   }
 
   // return all course codes at UQ
