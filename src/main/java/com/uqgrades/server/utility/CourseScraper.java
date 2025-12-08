@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.uqgrades.server.model.Course;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +19,25 @@ public class CourseScraper {
    */
   private static Course getOffering(String URL, String name, Integer year,
                                     Integer semester) {
+    String description = "";
+
     try {
       Map<String, String> assessments = new HashMap<>();
 
       // new layout
-      if (year >= 2024 && semester >= 2) {
+      if (year > 2024 || (year == 2024 && semester != 1)) {
         Document courseProfileDoc = Jsoup.connect(URL).get();
+
+        // extract course description from title
+        Element pageTitle = courseProfileDoc.selectFirst("div.hero__text");
+        Element title = pageTitle.selectFirst("h1");
+        String titleText = title.text();
+
+        // exclude last word
+        String[] titleWords = titleText.split(" ");
+        description = String.join(
+            " ", Arrays.copyOfRange(titleWords, 0, titleWords.length - 1));
+
         // select all rows from assessment summary table
         Element assessmentSummaryTable =
             courseProfileDoc.selectFirst("div.assessment-summary-table");
@@ -44,6 +58,15 @@ public class CourseScraper {
         URL = URL.substring(0, 73) + "5" +
               URL.substring(73 + 1); // open section 5
         Document courseProfileDoc = Jsoup.connect(URL).get();
+
+        // extract course description from title
+        Element pageTitle = courseProfileDoc.selectFirst("h1.page__title");
+        String titleText = pageTitle.text();
+
+        // exclude first 2 words
+        String[] titleWords = titleText.split(" ");
+        description = String.join(
+            " ", Arrays.copyOfRange(titleWords, 2, titleWords.length));
 
         Element assessmentSummaryTable = courseProfileDoc.selectFirst("tbody");
         Elements tableRows = assessmentSummaryTable.select("tr");
@@ -69,7 +92,7 @@ public class CourseScraper {
       Gson gson = new Gson();
       String jsonData = gson.toJson(assessments);
 
-      return new Course(name, year, semester, jsonData);
+      return new Course(name, description, year, semester, jsonData);
     } catch (IOException e) {
       System.err.println(e);
     }

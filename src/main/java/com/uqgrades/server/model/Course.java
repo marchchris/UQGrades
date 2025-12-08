@@ -17,6 +17,8 @@ public class Course {
 
   @Column(name = "name") private String name;
 
+  @Column(name = "description") private String description;
+
   @Column(name = "year") private Integer year;
 
   @Column(name = "semester") private Integer semester;
@@ -25,8 +27,10 @@ public class Course {
 
   public Course() {}
 
-  public Course(String name, Integer year, Integer semester, String data) {
+  public Course(String name, String description, Integer year, Integer semester,
+                String data) {
     this.name = name;
+    this.description = description;
     this.year = year;
     this.semester = semester;
     this.data = data;
@@ -39,6 +43,12 @@ public class Course {
   public String getName() { return name; }
 
   public void setName(String name) { this.name = name; }
+
+  public String getDescription() { return description; }
+
+  public void getDescription(String description) {
+    this.description = description;
+  }
 
   public Integer getYear() { return year; }
 
