@@ -17,9 +17,14 @@ public class Code {
 
   @Column(name = "code") private String code;
 
+  @Column(name = "description") private String description;
+
   public Code() {}
 
-  public Code(String code) { this.code = code; }
+  public Code(String code, String description) {
+    this.code = code;
+    this.description = description;
+  }
 
   public Long getId() { return id; }
 
@@ -28,4 +33,8 @@ public class Code {
   public String getCode() { return code; }
 
   public void setCode(String code) { this.code = code; }
+
+  public String getDescription() { return description; }
+
+  public void setDescription() { this.description = description; }
 }
