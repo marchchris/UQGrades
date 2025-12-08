@@ -28,7 +28,7 @@ export default function Calculator() {
   const [assessmentData, setAssessmentData] = useState(null);
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<>(null);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -83,13 +83,30 @@ export default function Calculator() {
             {Object.keys(assessmentData).map((key) => (
               <TableRow key={key}>
                 <TableCell>{key}</TableCell>
-                <TableCell>{assessmentData[key]}</TableCell>
+                <TableCell>
+                  {assessmentData[key] == "Pass"
+                    ? "Pass / Fail"
+                    : assessmentData[key]}
+                </TableCell>
                 <TableCell>
                   <Input placeholder="70, 70%, 7/10"></Input>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
+        </Table>
+      </div>
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Grade</TableHead>
+              <TableHead>Cutoff (%)</TableHead>
+              <TableHead>Required (%)</TableHead>
+              <TableHead>Required Score (%)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody></TableBody>
         </Table>
       </div>
     </div>

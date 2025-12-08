@@ -38,6 +38,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-center">
+            <p className="text-xs">Chris Marchand | Github</p>
+          </div>
         </ThemeProvider>
       </body>
     </html>
