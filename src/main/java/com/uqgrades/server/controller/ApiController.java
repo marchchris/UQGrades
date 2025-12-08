@@ -34,8 +34,16 @@ public class ApiController {
   public ResponseEntity<?> getCourse(@PathVariable String name,
                                      @PathVariable Integer year,
                                      @PathVariable Integer semester) {
-
-    return new ResponseEntity<>(
-        this.courseService.getCourse(name, year, semester), HttpStatus.OK);
+    Course course = this.courseService.getCourse(name, year, semester);
+    if (course != null) {
+      return new ResponseEntity<>(
+          this.courseService.getCourse(name, year, semester),
+          HttpStatus.OK); // return course
+    } else {
+      return new ResponseEntity<>(
+          String.format("%s %s Semester %s does not exist", name, year,
+                        semester),
+          HttpStatus.NOT_FOUND); // could not find course
+    }
   }
 }
