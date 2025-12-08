@@ -37,7 +37,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ModeToggle />
           {children}
         </ThemeProvider>
       </body>
