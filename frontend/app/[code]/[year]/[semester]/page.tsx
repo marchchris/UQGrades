@@ -40,7 +40,21 @@ export default function Calculator() {
   const [error, setError] = useState<>(null);
 
   const [score, setScore] = useState<number>(0);
+  const [remainingWeight, setRemainingWeight] = useState<number>(1);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
+
+  // grade percentage cutoffs
+  const [cutOffs, setCutOffs] = useState<number[]>([0, 30, 45, 50, 65, 75, 85]);
+
+  // rounds num to 2 decimal places
+  function normalise(num: number): number {
+    return Math.round(num * 100) / 100;
+  }
+
+  // clamp num to between 0 - 100
+  function clamp(num: number): number {
+    return Math.max(Math.min(100, num), 0);
+  }
 
   // checks if score in input field matches correct pattern
   function isValidScore(input: string): boolean {
@@ -75,20 +89,20 @@ export default function Calculator() {
     const value = input.trim();
 
     // empty input
-    if (input === "") return 0;
+    if (input === "") return -0.01;
 
     if (value.endsWith("%")) {
       // "70%" → 0.7
       const num = parseFloat(value.slice(0, -1));
-      return num / 100;
+      return normalise(num / 100);
     } else if (value.includes("/")) {
       // "7/10" → 0.7
       const [numerator, denominator] = value.split("/").map(Number);
-      return numerator / denominator;
+      return normalise(numerator / denominator);
     } else {
       // "70" → 0.7
       const num = parseFloat(value);
-      return num / 100;
+      return normalise(num / 100);
     }
   }
 
@@ -99,7 +113,7 @@ export default function Calculator() {
       {
         id: id,
         weighting: weighting,
-        value: 0,
+        value: -1,
       },
     ]);
   }
@@ -121,12 +135,28 @@ export default function Calculator() {
 
   // update total score when inputs change
   useEffect(() => {
-    let score = 0;
+    let currScore = 0;
+    let currRemainingWeight = 1;
+
     assessments.forEach((assessment) => {
-      score = score + parseWeighting(assessment.weighting) * assessment.value;
+      // dont count this assessment as its empty
+      if (assessment.value == -1) {
+        return;
+      }
+
+      const weight = parseWeighting(assessment.weighting);
+
+      currScore += weight * assessment.value;
+      currScore = normalise(currScore);
+
+      currRemainingWeight -= weight;
+      currRemainingWeight = normalise(currRemainingWeight);
     });
 
-    setScore(score);
+    setScore(currScore);
+    setRemainingWeight(currRemainingWeight);
+
+    console.log(currScore, currRemainingWeight);
   }, [assessments]);
 
   // fetch and retrieve course data from api
@@ -243,6 +273,21 @@ export default function Calculator() {
                 <TableHead>Required Score (%)</TableHead>
               </TableRow>
             </TableHeader>
+            <TableBody>
+              {cutOffs.map((cutOff, index) => (
+                <TableRow key={cutOff}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{cutOff}</TableCell>
+                  <TableCell>
+                    {clamp(normalise((cutOff - score) / remainingWeight))}
+                  </TableCell>
+                  <TableCell>
+                    {clamp(normalise(cutOff - score))} /{" "}
+                    {clamp(normalise(remainingWeight * 100))}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
             <TableBody></TableBody>
           </Table>
         </div>
