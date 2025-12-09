@@ -267,23 +267,24 @@ export default function Calculator() {
           <h1 className="text-xl text-center">Total Score: {score}%</h1>
         </div>
 
-        <div className="bg-card p-2 rounded-md w-full border">
-          <Table className="text-center">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-center">Grade</TableHead>
-                <TableHead className="text-center">Cutoff (%)</TableHead>
-                <TableHead className="text-center">Required (%)</TableHead>
-                <TableHead className="text-center">
-                  Required Score (%)
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {cutOffs.map((cutOff, index) => (
-                <TableRow
-                  key={cutOff}
-                  className={`
+        <div className="flex flex-col gap-3">
+          <div className="bg-card p-2 rounded-md w-full border">
+            <Table className="text-center">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-center">Grade</TableHead>
+                  <TableHead className="text-center">Cutoff (%)</TableHead>
+                  <TableHead className="text-center">Required (%)</TableHead>
+                  <TableHead className="text-center">
+                    Required Score (%)
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {cutOffs.map((cutOff, index) => (
+                  <TableRow
+                    key={cutOff}
+                    className={`
                     ${
                       clamp(normalise((cutOff - score) / remainingWeight)) > 100
                         ? "bg-[#f85149]"
@@ -293,21 +294,33 @@ export default function Calculator() {
                           ? "bg-[#2ea043]"
                           : ""
                     }`}
-                >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{cutOff}</TableCell>
-                  <TableCell>
-                    {clamp(normalise((cutOff - score) / remainingWeight))}
-                  </TableCell>
-                  <TableCell>
-                    {clamp(normalise(cutOff - score))} /{" "}
-                    {clamp(normalise(remainingWeight * 100))}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableBody></TableBody>
-          </Table>
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{cutOff}</TableCell>
+                    <TableCell>
+                      {clamp(normalise((cutOff - score) / remainingWeight))}
+                    </TableCell>
+                    <TableCell>
+                      {clamp(normalise(cutOff - score))} /{" "}
+                      {clamp(normalise(remainingWeight * 100))}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="flex justify-center items-center gap-3">
+            <div className="flex flex-row gap-1 items-center">
+              {" "}
+              <div className="w-3 h-3 rounded-full bg-[#2ea043]"></div>
+              <span className="text-xs">Guranteed</span>{" "}
+            </div>
+
+            <div className="flex flex-row gap-1 items-center">
+              <div className="w-3 h-3 rounded-full bg-[#f85149]"></div>
+              <span className="text-xs">Impossible</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
