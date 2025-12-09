@@ -11,8 +11,8 @@ export function Error({ code, year, semester }) {
           <span>Summer Semester</span>
         ) : (
           <span>Semester {semester}</span>
-        )}
-        , {year}.
+        )}{" "}
+        {year}.
       </AlertTitle>
       <AlertDescription>
         <p>
