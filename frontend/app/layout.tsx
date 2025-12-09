@@ -37,8 +37,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-center justify-center">
+          <div className="min-h-screen flex flex-col">
+            <main className="flex-grow">{children}</main>
+          </div>
+          <div className="p-4 flex flex-col items-center justify-center">
             <a className="text-xs font-bold" href="/">
               UQ Grades
             </a>

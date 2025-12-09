@@ -215,8 +215,8 @@ export default function Calculator() {
   }
 
   return (
-    <div className="flex flex-col h-screen justify-center items-center">
-      <div className="flex flex-col gap-6">
+    <div className="flex flex-col min-h-screen justify-center items-center">
+      <div className="flex flex-col gap-6 max-w-xl">
         <div className="bg-card p-2 rounded-md w-full border">
           <h1 className="text-xl text-center">
             {courseCode} -{" "}
