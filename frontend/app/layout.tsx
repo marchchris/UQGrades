@@ -38,8 +38,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-center">
-            <p className="text-xs">Chris Marchand | Github</p>
+          <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-center justify-center">
+            <a className="text-xs font-bold" href="/">
+              UQ Grades
+            </a>
+            <p className="text-xs">
+              <a href="https://chrismarchand.dev/">Chris Marchand</a> |{" "}
+              <a href="https://github.com/marchchris/UQGrades">Github</a>
+            </p>
           </div>
         </ThemeProvider>
       </body>
