@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import { LoadingPage } from "@/components/loading";
+import { Error } from "@/components/error";
 
 import {
   Table,
@@ -56,6 +57,18 @@ export default function Calculator() {
 
   if (loading) {
     return <LoadingPage />;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <div className="flex flex-col h-screen justify-center items-center">
+          <div className="w-full max-w-xl">
+            <Error code={courseCode} year={year} semester={semester}></Error>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
