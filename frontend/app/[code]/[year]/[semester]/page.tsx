@@ -51,9 +51,13 @@ export default function Calculator() {
     return Math.round(num * 100) / 100;
   }
 
-  // clamp num to between 0 - 100
+  // clamp num to above 0
+  // returns infinity if num is infinite
   function clamp(num: number): number {
-    return Math.max(Math.min(100, num), 0);
+    if (num === Infinity) {
+      return Infinity;
+    }
+    return Math.max(num, 0);
   }
 
   // checks if score in input field matches correct pattern
@@ -264,18 +268,32 @@ export default function Calculator() {
         </div>
 
         <div className="bg-card p-2 rounded-md w-full border">
-          <Table>
+          <Table className="text-center">
             <TableHeader>
               <TableRow>
-                <TableHead>Grade</TableHead>
-                <TableHead>Cutoff (%)</TableHead>
-                <TableHead>Required (%)</TableHead>
-                <TableHead>Required Score (%)</TableHead>
+                <TableHead className="text-center">Grade</TableHead>
+                <TableHead className="text-center">Cutoff (%)</TableHead>
+                <TableHead className="text-center">Required (%)</TableHead>
+                <TableHead className="text-center">
+                  Required Score (%)
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {cutOffs.map((cutOff, index) => (
-                <TableRow key={cutOff}>
+                <TableRow
+                  key={cutOff}
+                  className={`
+                    ${
+                      clamp(normalise((cutOff - score) / remainingWeight)) > 100
+                        ? "bg-[#f85149]"
+                        : clamp(
+                              normalise((cutOff - score) / remainingWeight),
+                            ) <= 0
+                          ? "bg-[#2ea043]"
+                          : ""
+                    }`}
+                >
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{cutOff}</TableCell>
                   <TableCell>
