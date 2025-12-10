@@ -217,7 +217,7 @@ export default function Calculator() {
       <div className="flex flex-col gap-6 max-w-xl">
         <div className="bg-card p-2 rounded-md w-full border">
           <h1 className="text-xl text-center">
-            {courseCode} -{" "}
+            {courseCode.toUpperCase()} -{" "}
             {semester != 3 ? (
               <span>Semester {semester}</span>
             ) : (
