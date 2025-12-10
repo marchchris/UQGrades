@@ -5,7 +5,7 @@ import com.uqgrades.server.model.Course;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.jsoup.Jsoup;
@@ -22,7 +22,7 @@ public class CourseScraper {
     String description = "";
 
     try {
-      Map<String, String> assessments = new HashMap<>();
+      Map<String, String> assessments = new LinkedHashMap<>();
 
       // new layout
       if (year > 2024 || (year == 2024 && semester != 1)) {

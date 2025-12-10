@@ -159,8 +159,6 @@ export default function Calculator() {
 
     setScore(currScore);
     setRemainingWeight(currRemainingWeight);
-
-    console.log(currScore, currRemainingWeight);
   }, [assessments]);
 
   // fetch and retrieve course data from api

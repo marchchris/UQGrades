@@ -121,3 +121,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.bg-dot-grid {
+  background-image: radial-gradient(circle, rgb(52,52,52), 2px, transparent 2px);
+  background-size: 40px 40px;
+}
