@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 
 export default function Home() {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
   const router = useRouter();
 
   // course codes combobox variables
@@ -43,9 +44,10 @@ export default function Home() {
 
   // fetch course codes from backend api
   useEffect(() => {
+    console.log(process.env.BASE_URL);
     const fetchCodes = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/codes");
+        const response = await fetch(`${BASE_URL}/api/codes`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
