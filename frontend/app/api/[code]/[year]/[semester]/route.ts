@@ -7,10 +7,10 @@ export async function GET(
 ) {
   
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-  const { courseCode, year, semester } = await context.params;
+  const { code, year, semester } = await context.params;
 
   try {
-    const response = await fetch(`${BASE_URL}/api/${courseCode}/${year}/${semester}`);
+    const response = await fetch(`${BASE_URL}/api/${code}/${year}/${semester}`);
     if (!response.ok) {
       return NextResponse.json({ error: 'Backend request failed' }, { status: response.status });
     }
