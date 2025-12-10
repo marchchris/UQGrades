@@ -6,7 +6,7 @@ export function ErrorAlert({ code, year, semester }) {
     <Alert variant="destructive">
       <AlertCircleIcon />
       <AlertTitle>
-        {code},{" "}
+        {code.toUpperCase()},{" "}
         {semester == 3 ? (
           <span>Summer Semester</span>
         ) : (

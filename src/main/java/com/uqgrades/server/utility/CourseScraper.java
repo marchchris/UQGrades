@@ -117,6 +117,7 @@ public class CourseScraper {
           "course-current-offerings"); // current offerings tables
       Element archTable = coursePageDoc.getElementById(
           "course-archived-offerings"); // archived offerings table
+                                        //
 
       List<Element> tables = List.of(currTable, archTable);
 

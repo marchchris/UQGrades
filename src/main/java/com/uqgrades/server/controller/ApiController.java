@@ -30,15 +30,39 @@ public class ApiController {
   // return all course codes at UQ
   @GetMapping("/codes")
   public ResponseEntity<?> getCodes() {
+
     return new ResponseEntity<>(this.codeService.getAllCodes(), HttpStatus.OK);
   }
 
   // return course offering
-  @GetMapping("/{name}/{year}/{semester}")
+  @GetMapping("/{name}/{yearStr}/{semesterStr}")
   public ResponseEntity<?> getCourse(@PathVariable String name,
-                                     @PathVariable Integer year,
-                                     @PathVariable Integer semester) {
+                                     @PathVariable String yearStr,
+                                     @PathVariable String semesterStr) {
+
+    // check course code follows convention
+    if (!name.matches("^[A-Za-z]{4}\\d{4}$")) {
+      return ResponseEntity.badRequest().body(
+          "Invalid name format. Expected 4 letters followed by 4 digits.");
+    }
+
+    // check year is a valid year
+    if (!yearStr.matches("^\\d{4}$")) {
+      return ResponseEntity.badRequest().body(
+          "Invalid year format. Expected a 4-digit number.");
+    }
+
+    // check semester is 1 - 3
+    if (!semesterStr.matches("^[1-3]$")) {
+      return ResponseEntity.badRequest().body(
+          "Invalid semester. Expected a number from 1 to 3.");
+    }
+
+    Integer year = Integer.parseInt(yearStr);
+    Integer semester = Integer.parseInt(semesterStr);
+
     Course course = this.courseService.getCourse(name, year, semester);
+
     if (course != null) {
       return new ResponseEntity<>(
           this.courseService.getCourse(name, year, semester),
