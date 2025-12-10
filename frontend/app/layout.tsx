@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "UQ Grades",
   description: "Final grade calculator for UQ courses.",
+  icons: {
+    icon: `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="80" text-anchor="middle" dominant-baseline="middle">🎓</text></svg>`,
+  },
 };
 
 export default function RootLayout({
