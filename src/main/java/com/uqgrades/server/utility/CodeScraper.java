@@ -1,6 +1,7 @@
 package com.uqgrades.server.utility;
 
 import com.uqgrades.server.model.Code;
+import com.uqgrades.server.service.ConfigService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,7 @@ import org.jsoup.select.Elements;
 
 public class CodeScraper {
   public static List<Code> scrapeCodes() {
-    String URL = "https://programs-courses.uq.edu.au/"
-                 + "search.html?keywords=&searchType=coursecode&archived=true&"
-                 + "CourseParameters%5Bsemester%5D=";
+    String URL = ConfigService.getCourseUrl();
 
     List<Code> codes = new ArrayList<>();
 

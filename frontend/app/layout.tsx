@@ -46,7 +46,7 @@ export default function RootLayout({
                 UQ Grades
               </a>
               <p className="text-xs">
-                <a href="https://chrismarchand.dev/">Chris Marchand</a> |{" "}
+                <a href="https://chrismarchand.dev/">marchChris</a> |{" "}
                 <a href="https://github.com/marchchris/UQGrades">Github</a>
               </p>
             </footer>

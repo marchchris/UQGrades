@@ -2,9 +2,11 @@ package com.uqgrades.server.controller;
 
 import com.uqgrades.server.model.Course;
 import com.uqgrades.server.service.CodeService;
+import com.uqgrades.server.service.ConfigService;
 import com.uqgrades.server.service.CourseService;
 import com.uqgrades.server.utility.CodeScraper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,11 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api")
 public class ApiController {
-  CourseService courseService;
-  CodeService codeService;
+  private final CourseService courseService;
+  private final CodeService codeService;
 
   @Autowired
   public ApiController(CourseService courseService, CodeService codeService) {

@@ -2,6 +2,7 @@ package com.uqgrades.server.utility;
 
 import com.google.gson.Gson;
 import com.uqgrades.server.model.Course;
+import com.uqgrades.server.service.ConfigService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +82,7 @@ public class CourseScraper {
           Element em = task.selectFirst("em");
           em.remove();
 
-          String taskText = task.text().split(" ")[0];
+          String taskText = task.text();
           String weightingText = weighting.text();
 
           assessments.put(taskText, weightingText);
@@ -107,8 +108,7 @@ public class CourseScraper {
                                     Integer semester) {
 
     // create URL for course page
-    String URL =
-        "https://programs-courses.uq.edu.au/course.html?course_code=" + name;
+    String URL = ConfigService.getProfileUrl() + name;
 
     try {
       Document coursePageDoc = Jsoup.connect(URL).get();

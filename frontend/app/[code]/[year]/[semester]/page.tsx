@@ -321,6 +321,11 @@ export default function Calculator() {
               <span className="text-xs">Impossible</span>
             </div>
           </div>
+          <div className="flex justify-center mt-4">
+            <Button variant="outline" onClick={() => router.push("/")}>
+              Go Back
+            </Button>
+          </div>
         </div>
       </div>
     </div>
