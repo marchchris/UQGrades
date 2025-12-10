@@ -38,16 +38,18 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="min-h-screen flex flex-col">
-            <main className="flex-grow">{children}</main>
-          </div>
-          <div className="p-4 flex flex-col items-center justify-center">
-            <a className="text-xs font-bold" href="/">
-              UQ Grades
-            </a>
-            <p className="text-xs">
-              <a href="https://chrismarchand.dev/">Chris Marchand</a> |{" "}
-              <a href="https://github.com/marchchris/UQGrades">Github</a>
-            </p>
+            <main className="flex-grow flex items-center justify-center">
+              {children}
+            </main>
+            <footer className="p-4 flex flex-col items-center justify-center">
+              <a className="text-xs font-bold" href="/">
+                UQ Grades
+              </a>
+              <p className="text-xs">
+                <a href="https://chrismarchand.dev/">Chris Marchand</a> |{" "}
+                <a href="https://github.com/marchchris/UQGrades">Github</a>
+              </p>
+            </footer>
           </div>
         </ThemeProvider>
       </body>

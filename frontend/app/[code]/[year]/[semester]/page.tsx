@@ -204,7 +204,7 @@ export default function Calculator() {
   if (error) {
     return (
       <div>
-        <div className="flex flex-col h-screen justify-center items-center">
+        <div className="flex flex-col h-full justify-center items-center">
           <div className="w-full max-w-xl flex flex-col items-center gap-4">
             <Error code={courseCode} year={year} semester={semester}></Error>
             <Button onClick={() => router.push("/")}>Try Again</Button>
@@ -215,7 +215,7 @@ export default function Calculator() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen justify-center items-center">
+    <div className="flex flex-col h-full justify-center items-center">
       <div className="flex flex-col gap-6 max-w-xl">
         <div className="bg-card p-2 rounded-md w-full border">
           <h1 className="text-xl text-center">

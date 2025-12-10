@@ -26,11 +26,6 @@ public class ApiController {
     this.codeService = codeService;
   }
 
-  @GetMapping("/test")
-  public void test() {
-    CodeScraper.scrapeCodes();
-  }
-
   // return all course codes at UQ
   @GetMapping("/codes")
   public ResponseEntity<?> getCodes() {

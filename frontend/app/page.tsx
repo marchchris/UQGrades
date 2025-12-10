@@ -89,7 +89,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-full items-center justify-center">
       <Card className="w-full max-w-sm">
         <CardContent className="flex flex-col gap-6 items-center">
           <div className="text-center">
