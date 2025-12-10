@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import { LoadingPage } from "@/components/loading";
-import { Error } from "@/components/error";
+import { ErrorAlert } from "@/components/error";
 
 import {
   Table,
@@ -206,7 +206,11 @@ export default function Calculator() {
       <div>
         <div className="flex flex-col h-full justify-center items-center">
           <div className="w-full max-w-xl flex flex-col items-center gap-4">
-            <Error code={courseCode} year={year} semester={semester}></Error>
+            <ErrorAlert
+              code={courseCode}
+              year={year}
+              semester={semester}
+            ></ErrorAlert>
             <Button onClick={() => router.push("/")}>Try Again</Button>
           </div>
         </div>
