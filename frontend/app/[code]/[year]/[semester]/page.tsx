@@ -26,8 +26,6 @@ interface Assessment {
 }
 
 export default function Calculator() {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
   const params = useParams();
   const router = useRouter();
 
@@ -167,9 +165,7 @@ export default function Calculator() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/api/${courseCode}/${year}/${semester}`,
-        );
+        const response = await fetch(`/api/${courseCode}/${year}/${semester}`);
 
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
