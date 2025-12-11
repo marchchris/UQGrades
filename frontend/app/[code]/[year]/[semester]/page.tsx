@@ -54,9 +54,6 @@ export default function Calculator() {
   // clamp num to above 0
   // returns infinity if num is infinite
   function clamp(num: number): number {
-    if (num === Infinity) {
-      return Infinity;
-    }
     return Math.max(num, 0);
   }
 
@@ -214,6 +211,21 @@ export default function Calculator() {
     );
   }
 
+  // returns the requiredScore for the targetGrade currently
+  function requiredScore(targetGrade) {
+    let required = (targetGrade - score) / remainingWeight;
+
+    if (required <= 0 || Number.isNaN(required)) {
+      return 0;
+    }
+
+    if (required == Infinity) {
+      return Infinity;
+    }
+
+    return required;
+  }
+
   return (
     <div className="flex flex-col h-full justify-center items-center">
       <div className="flex flex-col gap-6 max-w-xl">
@@ -286,20 +298,16 @@ export default function Calculator() {
                     key={cutOff}
                     className={`
                     ${
-                      clamp(normalise((cutOff - score) / remainingWeight)) > 100
+                      requiredScore(cutOff) >= 100
                         ? "bg-[#f85149]"
-                        : clamp(
-                              normalise((cutOff - score) / remainingWeight),
-                            ) <= 0
+                        : requiredScore(cutOff) <= 0
                           ? "bg-[#2ea043]"
                           : ""
                     }`}
                   >
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{cutOff}</TableCell>
-                    <TableCell>
-                      {clamp(normalise((cutOff - score) / remainingWeight))}
-                    </TableCell>
+                    <TableCell>{requiredScore(cutOff)}</TableCell>
                     <TableCell>
                       {clamp(normalise(cutOff - score))} /{" "}
                       {clamp(normalise(remainingWeight * 100))}
