@@ -223,7 +223,7 @@ export default function Calculator() {
       return Infinity;
     }
 
-    return required;
+    return normalise(required);
   }
 
   return (
